@@ -3,7 +3,7 @@ public class pc_dynamic {
     private static int NUM_THREADS = 4;
 
     public static void main(String[] args) {
-        if (args.length==2) {
+        if (args.length == 2) {
             NUM_THREADS = Integer.parseInt(args[0]);
             NUM_END = Integer.parseInt(args[1]);
         }
