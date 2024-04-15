@@ -37,4 +37,38 @@ public class pc_dynamic {
         }
         return true;
     }
+
+    static class DynamicThread extends Thread {
+        static int count;
+
+        int thread_cnt;
+        int thread_idx;
+        int tmpCount;
+        long timeDiff;
+
+        public DynamicThread(int idx, int cnt) {
+            this.thread_cnt = cnt;
+            this.thread_idx = idx;
+        }
+
+        @Override
+        public void run() {
+            tmpCount = 0;
+
+            int numFrom = (NUM_END / thread_cnt) * thread_idx;
+            int numTo = (NUM_END / thread_cnt) * (thread_idx + 1) - 1;
+
+            long startTime = System.currentTimeMillis();
+            for (int i = numFrom; i < numTo; i++) {
+                if (isPrime(i)) {
+                    tmpCount++;
+                }
+            }
+
+            count += tmpCount;
+
+            long endTime = System.currentTimeMillis();
+            timeDiff = endTime - startTime;
+        }
+    }
 }
