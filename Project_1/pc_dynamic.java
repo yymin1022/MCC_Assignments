@@ -8,6 +8,8 @@ public class pc_dynamic {
             NUM_END = Integer.parseInt(args[1]);
         }
 
+        System.out.println("Dynamic Multi-Thread with " + NUM_THREADS + " threads.");
+
         long startTime = System.currentTimeMillis();
 
         DynamicThread[] threads = new DynamicThread[NUM_THREADS];
