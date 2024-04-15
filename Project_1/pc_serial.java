@@ -1,4 +1,4 @@
-public class PC_Serial {
+public class pc_serial {
     private static int NUM_END = 200000;
     private static int NUM_THREADS = 1;
 
