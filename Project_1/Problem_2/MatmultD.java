@@ -111,7 +111,6 @@ public class MatmultD {
                 Thread.yield();
             }
 
-            System.out.println("Thread #" + thread_idx + " Row from " + numFrom + " to " + numTo);
             while (cur_row < numTo) {
                 for(int i = 0; i < MATRIX_B[0].length; i++){
                     for(int j = 0; j < MATRIX_A[0].length; j++){
