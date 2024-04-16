@@ -1,4 +1,4 @@
-public class pc_static_cycle {
+public class pc_static_cyclic {
     private static int NUM_END = 200000;
     private static int NUM_THREADS = 4;
 
@@ -12,9 +12,9 @@ public class pc_static_cycle {
 
         long startTime = System.currentTimeMillis();
 
-        pc_static_cycle.StaticCyclicThread[] threads = new pc_static_cycle.StaticCyclicThread[NUM_THREADS];
+        pc_static_cyclic.StaticCyclicThread[] threads = new pc_static_cyclic.StaticCyclicThread[NUM_THREADS];
         for (int i = 0; i < NUM_THREADS; i++) {
-            threads[i] = new pc_static_cycle.StaticCyclicThread(i, NUM_THREADS);
+            threads[i] = new pc_static_cyclic.StaticCyclicThread(i, NUM_THREADS);
         }
 
         for (int i = 0; i < NUM_THREADS; i++) {
@@ -37,7 +37,7 @@ public class pc_static_cycle {
         }
 
         System.out.println("Program Execution Time: " + timeDiff + "ms");
-        System.out.println("1..." + (NUM_END - 1) + " prime# counter=" + pc_static_cycle.StaticCyclicThread.count);
+        System.out.println("1..." + (NUM_END - 1) + " prime# counter=" + pc_static_cyclic.StaticCyclicThread.count);
     }
 
     private static boolean isPrime(int x) {
