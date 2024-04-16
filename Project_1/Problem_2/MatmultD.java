@@ -64,22 +64,6 @@ public class MatmultD {
         return result;
     }
 
-    public static void printMatrix(int[][] matrix) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        System.out.printf("Matrix[%d][%d]\n", rows, cols);
-
-        int sum = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                sum += matrix[i][j];
-                System.out.printf("%4d ", matrix[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.printf("Matrix Sum = %d\n", sum);
-    }
-
     static class MultiplyMatrixThread extends Thread {
         static int[][] matrixResult;
         static int matrixSum;
