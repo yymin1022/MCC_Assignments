@@ -47,7 +47,7 @@ public class MatmultD {
         }
 
         System.out.println("Program Execution Time: " + timeDiff + "ms");
-        printMatrix(MultiplyMatrixThread.matrixResult);
+        System.out.println("Result Matrix Sum: " + MultiplyMatrixThread.matrixSum);
     }
 
     public static int[][] readMatrix() {
@@ -87,7 +87,7 @@ public class MatmultD {
 
         int thread_cnt;
         int thread_idx;
-        int tmpCount;
+        int tmpSum;
         long timeDiff;
 
         public MultiplyMatrixThread(int idx, int cnt) {
@@ -100,7 +100,7 @@ public class MatmultD {
 
         @Override
         public void run() {
-            tmpCount = 0;
+            tmpSum = 0;
 
             int numFrom = (MATRIX_A.length / thread_cnt) * thread_idx;
             int numTo = (thread_idx + 1 != thread_cnt ? (MATRIX_A.length / thread_cnt) * (thread_idx + 1) : MATRIX_A.length);
@@ -116,11 +116,14 @@ public class MatmultD {
                 for(int i = 0; i < MATRIX_B[0].length; i++){
                     for(int j = 0; j < MATRIX_A[0].length; j++){
                         matrixResult[cur_row][i] += MATRIX_A[cur_row][j] * MATRIX_B[j][i];
+                        tmpSum += MATRIX_A[cur_row][j] * MATRIX_B[j][i];
                     }
                 }
 
                 cur_row++;
             }
+
+            matrixSum += tmpSum;
 
             long endTime = System.currentTimeMillis();
             timeDiff = endTime - startTime;
