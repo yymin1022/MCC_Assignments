@@ -37,7 +37,7 @@ public class pc_static_block {
         }
 
         System.out.println("Program Execution Time: " + timeDiff + "ms");
-        System.out.println("1..." + (NUM_END - 1) + " prime# counter=" + pc_dynamic.DynamicThread.count);
+        System.out.println("1..." + (NUM_END - 1) + " prime# counter=" + pc_static_block.StaticBlockThread.count);
     }
 
     private static boolean isPrime(int x) {
@@ -77,22 +77,20 @@ public class pc_static_block {
 
             long startTime = System.currentTimeMillis();
 
-            int currentNum = numFrom;
-            while (num < numTo) {
-                if (isPrime(currentNum)) {
-                    tmpCount++;
-                }
-                currentNum = getNextNum();
+            while (num < numFrom) {
+                Thread.yield();
             }
-            count += tmpCount;
+
+            while (num < numTo) {
+                if (isPrime(num)) {
+                    count++;
+                }
+
+                num++;
+            }
 
             long endTime = System.currentTimeMillis();
             timeDiff = endTime - startTime;
-        }
-
-        static synchronized int getNextNum() {
-            num++;
-            return num;
         }
     }
 }
