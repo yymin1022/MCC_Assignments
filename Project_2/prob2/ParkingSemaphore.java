@@ -1,31 +1,28 @@
+import java.util.concurrent.Semaphore;
 
 class ParkingGarageS {
-    private int places;
+    private Semaphore places;
 
     public ParkingGarageS(int places) {
         if(places < 0){
             places = 0;
         }
 
-        this.places = places;
+        this.places = new Semaphore(places);
     }
 
-    public synchronized void enter() {
-        while (places == 0) {
-            try {
-                wait();
-            } catch(InterruptedException e) {}
-        }
-        places--;
+    public void enter() {
+        try{
+            places.acquire();
+        } catch(InterruptedException e) {}
     }
 
-    public synchronized void leave() {
-        places++;
-        notify();
+    public void leave() {
+        places.release();
     }
 
-    public synchronized int getPlaces() {
-        return places;
+    public int getPlaces() {
+        return places.availablePermits();
     }
 }
 
@@ -57,7 +54,7 @@ class CarS extends Thread {
     }
 
     public void run() {
-        while(true) {
+        for(int i = 0; i < 3; i++) {
             try {
                 sleep((int)(Math.random() * 10000));
             } catch(InterruptedException e) {}
