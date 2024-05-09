@@ -1,7 +1,7 @@
 
-class ParkingGarage {
+class ParkingGarageBQ {
   private int places;
-  public ParkingGarage(int places) {
+  public ParkingGarageBQ(int places) {
     if (places < 0)
       places = 0;
     this.places = places;
@@ -25,9 +25,9 @@ class ParkingGarage {
 }
 
 
-class Car extends Thread {
-  private ParkingGarage parkingGarage;
-  public Car(String name, ParkingGarage p) {
+class CarBQ extends Thread {
+  private ParkingGarageBQ parkingGarage;
+  public CarBQ(String name, ParkingGarageBQ p) {
     super(name);
     this.parkingGarage = p;
     start();
@@ -77,9 +77,9 @@ class Car extends Thread {
 
 public class ParkingBlockingQueue {
   public static void main(String[] args){
-    ParkingGarage parkingGarage = new ParkingGarage(7);
+    ParkingGarageBQ parkingGarage = new ParkingGarageBQ(7);
     for (int i=1; i<= 10; i++) {
-      Car c = new Car("Car "+i, parkingGarage);
+      CarBQ c = new CarBQ("Car "+i, parkingGarage);
     }
   }
 }
