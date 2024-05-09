@@ -1,7 +1,7 @@
 
-class ParkingGarage {
+class ParkingGarageS {
   private int places;
-  public ParkingGarage(int places) {
+  public ParkingGarageS(int places) {
     if (places < 0)
       places = 0;
     this.places = places;
@@ -25,9 +25,9 @@ class ParkingGarage {
 }
 
 
-class Car extends Thread {
-  private ParkingGarage parkingGarage;
-  public Car(String name, ParkingGarage p) {
+class CarS extends Thread {
+  private ParkingGarageS parkingGarage;
+  public CarS(String name, ParkingGarageS p) {
     super(name);
     this.parkingGarage = p;
     start();
@@ -77,9 +77,9 @@ class Car extends Thread {
 
 public class ParkingSemaphore {
   public static void main(String[] args){
-    ParkingGarage parkingGarage = new ParkingGarage(7);
+    ParkingGarageS parkingGarage = new ParkingGarageS(7);
     for (int i=1; i<= 10; i++) {
-      Car c = new Car("Car "+i, parkingGarage);
+      CarS c = new CarS("Car "+i, parkingGarage);
     }
   }
 }
