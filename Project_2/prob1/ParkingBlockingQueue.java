@@ -1,7 +1,7 @@
 import java.util.concurrent.ArrayBlockingQueue;
 
 class ParkingGarageBQ {
-    private ArrayBlockingQueue<Integer> placesQueue;
+    private final ArrayBlockingQueue<Integer> placesQueue;
 
     public ParkingGarageBQ(int places) {
         if(places < 0) {
@@ -14,7 +14,9 @@ class ParkingGarageBQ {
     public void enter() {
         try {
             placesQueue.put(0);
-        } catch(InterruptedException e) {}
+        } catch(InterruptedException e) {
+            System.err.printf("Err: %s\n", e);
+        }
     }
 
     public void leave() {
@@ -28,7 +30,7 @@ class ParkingGarageBQ {
 
 
 class CarBQ extends Thread {
-    private ParkingGarageBQ parkingGarage;
+    private final ParkingGarageBQ parkingGarage;
 
     public CarBQ(String name, ParkingGarageBQ p) {
         super(name);
@@ -56,7 +58,9 @@ class CarBQ extends Thread {
         while(true) {
             try {
                 sleep((int)(Math.random() * 10000));
-            } catch(InterruptedException e) {}
+            } catch(InterruptedException e) {
+                System.err.printf("Err: %s\n", e);
+            }
 
             tryingEnter();
             parkingGarage.enter();
@@ -64,7 +68,9 @@ class CarBQ extends Thread {
 
             try {
                 sleep((int)(Math.random() * 20000));
-            } catch(InterruptedException e) {}
+            } catch(InterruptedException e) {
+                System.err.printf("Err: %s\n", e);
+            }
 
             aboutToLeave();
             parkingGarage.leave();
@@ -72,7 +78,6 @@ class CarBQ extends Thread {
         }
     }
 }
-
 
 public class ParkingBlockingQueue {
     public static void main(String[] args) {
