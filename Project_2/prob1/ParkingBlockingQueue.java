@@ -3,7 +3,7 @@ class ParkingGarageBQ {
     private int places;
 
     public ParkingGarageBQ(int places) {
-        if(places < 0){
+        if(places < 0) {
             places = 0;
         }
 
@@ -11,7 +11,7 @@ class ParkingGarageBQ {
     }
 
     public synchronized void enter() {
-        while (places == 0) {
+        while(places == 0) {
             try {
                 wait();
             } catch(InterruptedException e) {}
@@ -40,20 +40,20 @@ class CarBQ extends Thread {
     }
 
     private void tryingEnter() {
-        System.out.println(getName()+": trying to enter");
+        System.out.printf("%s: trying to enter\n", getName());
     }
 
 
     private void justEntered() {
-        System.out.println(getName()+": just entered");
+        System.out.printf("%s: just entered\n", getName());
     }
 
     private void aboutToLeave() {
-        System.out.println(getName()+":                                     about to leave");
+        System.out.printf("%s:                                     about to leave\n", getName());
     }
 
     private void Left() {
-        System.out.println(getName()+":                                     have been left");
+        System.out.printf("%s:                                     have been left\n", getName());
     }
 
     public void run() {
@@ -81,6 +81,7 @@ class CarBQ extends Thread {
 public class ParkingBlockingQueue {
     public static void main(String[] args) {
         ParkingGarageBQ parkingGarage = new ParkingGarageBQ(7);
+        
         for(int i = 1; i <= 10; i++) {
             CarBQ c = new CarBQ("Car " + i, parkingGarage);
         }
