@@ -1,31 +1,28 @@
+import java.util.concurrent.ArrayBlockingQueue;
 
 class ParkingGarageBQ {
-    private int places;
+    private ArrayBlockingQueue<Integer> placesQueue;
 
     public ParkingGarageBQ(int places) {
         if(places < 0) {
             places = 0;
         }
 
-        this.places = places;
+        placesQueue = new ArrayBlockingQueue<>(places);
     }
 
-    public synchronized void enter() {
-        while(places == 0) {
-            try {
-                wait();
-            } catch(InterruptedException e) {}
-        }
-        places--;
+    public void enter() {
+        try {
+            placesQueue.put(0);
+        } catch(InterruptedException e) {}
     }
 
-    public synchronized void leave() {
-        places++;
-        notify();
+    public void leave() {
+        placesQueue.poll();
     }
 
     public synchronized int getPlaces() {
-        return places;
+        return placesQueue.size();
     }
 }
 
@@ -42,7 +39,6 @@ class CarBQ extends Thread {
     private void tryingEnter() {
         System.out.printf("%s: trying to enter\n", getName());
     }
-
 
     private void justEntered() {
         System.out.printf("%s: just entered\n", getName());
@@ -81,7 +77,7 @@ class CarBQ extends Thread {
 public class ParkingBlockingQueue {
     public static void main(String[] args) {
         ParkingGarageBQ parkingGarage = new ParkingGarageBQ(7);
-        
+
         for(int i = 1; i <= 10; i++) {
             CarBQ c = new CarBQ("Car " + i, parkingGarage);
         }
