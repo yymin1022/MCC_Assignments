@@ -1,10 +1,10 @@
 import java.util.concurrent.Semaphore;
 
 class ParkingGarageS {
-    private Semaphore places;
+    private final Semaphore places;
 
     public ParkingGarageS(int places) {
-        if(places < 0){
+        if(places < 0) {
             places = 0;
         }
 
@@ -12,9 +12,11 @@ class ParkingGarageS {
     }
 
     public void enter() {
-        try{
+        try {
             places.acquire();
-        } catch(InterruptedException e) {}
+        } catch(InterruptedException e) {
+            System.err.printf("Err: %s\n", e);
+        }
     }
 
     public void leave() {
@@ -28,7 +30,7 @@ class ParkingGarageS {
 
 
 class CarS extends Thread {
-    private ParkingGarageS parkingGarage;
+    private final ParkingGarageS parkingGarage;
 
     public CarS(String name, ParkingGarageS p) {
         super(name);
@@ -39,7 +41,6 @@ class CarS extends Thread {
     private void tryingEnter() {
         System.out.println(getName()+": trying to enter");
     }
-
 
     private void justEntered() {
         System.out.println(getName()+": just entered");
@@ -54,10 +55,12 @@ class CarS extends Thread {
     }
 
     public void run() {
-        for(int i = 0; i < 3; i++) {
+        while(true) {
             try {
                 sleep((int)(Math.random() * 10000));
-            } catch(InterruptedException e) {}
+            } catch(InterruptedException e) {
+                System.err.printf("Err: %s\n", e);
+            }
 
             tryingEnter();
             parkingGarage.enter();
@@ -65,7 +68,9 @@ class CarS extends Thread {
 
             try {
                 sleep((int)(Math.random() * 20000));
-            } catch(InterruptedException e) {}
+            } catch(InterruptedException e) {
+                System.err.printf("Err: %s\n", e);
+            }
 
             aboutToLeave();
             parkingGarage.leave();
@@ -74,10 +79,10 @@ class CarS extends Thread {
     }
 }
 
-
 public class ParkingSemaphore {
     public static void main(String[] args) {
         ParkingGarageS parkingGarage = new ParkingGarageS(7);
+
         for(int i = 1; i <= 10; i++) {
             CarS c = new CarS("Car " + i, parkingGarage);
         }
