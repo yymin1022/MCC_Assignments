@@ -27,16 +27,18 @@ public class ex3 {
 
     public void producer() throws InterruptedException {
         for(int i = 0; i < 10; i++) {
-            int producedValue = value.getAndIncrement();
-            System.out.println("Producing " + producedValue);
+            int curValue = value.getAndAdd(1);
+            int newValue = value.addAndGet(1);
+            value.set(newValue + 1);
+            System.out.println("Producing " + newValue + " from " + curValue);
             Thread.sleep(1000);
         }
     }
 
     public void consumer() throws InterruptedException {
         for(int i = 0; i < 10; i++) {
-            int consumedValue = value.get();
-            System.out.println("Consuming " + consumedValue);
+            int curValue = value.get();
+            System.out.println("Consuming " + curValue);
             Thread.sleep(1000);
         }
     }
