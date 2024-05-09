@@ -1,8 +1,6 @@
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class ex1 {
-    private final ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
-
     public static void main(String[] args) {
         ex1 example = new ex1();
         Thread producerThread = new Thread(() -> {
@@ -24,6 +22,8 @@ public class ex1 {
         producerThread.start();
         consumerThread.start();
     }
+
+    private final ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
 
     public void producer() throws InterruptedException {
         int value = 0;

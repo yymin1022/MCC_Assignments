@@ -2,9 +2,6 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 public class ex4 {
-    private final CyclicBarrier barrier = new CyclicBarrier(2, () -> {});
-    int num = 0;
-
     public static void main(String[] args) {
         ex4 example = new ex4();
         Thread producerThread = new Thread(() -> {
@@ -30,6 +27,9 @@ public class ex4 {
         producerThread.start();
         consumerThread.start();
     }
+
+    private final CyclicBarrier barrier = new CyclicBarrier(2, () -> {});
+    int num = 0;
 
     public void producer() throws InterruptedException, BrokenBarrierException {
         for(int i = 0; i < 10; i++) {

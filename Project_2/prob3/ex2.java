@@ -4,9 +4,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ex2 {
-    private final List<Integer> list = new ArrayList<>();
-    private final ReadWriteLock lock = new ReentrantReadWriteLock();
-
     public static void main(String[] args) {
         ex2 example = new ex2();
         Thread producerThread = new Thread(() -> {
@@ -28,6 +25,9 @@ public class ex2 {
         producerThread.start();
         consumerThread.start();
     }
+
+    private final List<Integer> list = new ArrayList<>();
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     public void producer() throws InterruptedException {
         int value = 0;
