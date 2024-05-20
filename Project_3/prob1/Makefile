@@ -1,0 +1,24 @@
+CC		= gcc
+CFLAGS	= -Wall -Werror -Wextra
+
+TARGET	= prob1
+SRC		= prob1.c
+OBJ		= $(SRC:.c=.o)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $(TARGET)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $^
+
+clean:
+	rm -rf $(OBJ)
+
+fclean: clean
+	rm -rf $(TARGET)
+
+re: fclean all
+
+.PHONY: $(TARGET) all clean fclean re
