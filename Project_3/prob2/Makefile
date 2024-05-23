@@ -1,14 +1,16 @@
-CC		= gcc
+CC		= gcc-14
 CFLAGS	= -Wall -Werror -Wextra
 
 TARGET	= prob2
 SRC		= prob2.c
 OBJ		= $(SRC:.c=.o)
 
+DIR_OMP	= /opt/homebrew/opt/libomp/lib
+
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $(TARGET)
+	$(CC) $(CFLAGS) $^ -fopenmp -o $(TARGET)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $^
