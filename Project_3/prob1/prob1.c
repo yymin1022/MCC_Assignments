@@ -2,9 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define NUM_END 200000
+
+int     isPrime(int x);
 int     parse_schedule_type(char *str);
 int     parse_thread_cnt(char *str);
 void    error_exit(char *msg);
+
+int count = 0;
 
 int main(int argc, char **argv)
 {
@@ -20,6 +25,18 @@ int main(int argc, char **argv)
     printf("Hello, World!\n");
 
     return (0);
+}
+
+int isPrime(int x)
+{
+    if (x <= 1)
+        return (0);
+    for (int i = 2; i * i <= x; i++)
+    {
+        if (x % i == 0)
+            return (0);
+    }
+    return (1);
 }
 
 int parse_schedule_type(char *str)
