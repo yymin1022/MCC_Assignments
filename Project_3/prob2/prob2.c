@@ -3,7 +3,6 @@
 
 #define NUM_STEPS 10000000
 
-double  step;
 int     parse_chunk_size(char *str);
 int     parse_schedule_type(char *str);
 int     parse_thread_cnt(char *str);
@@ -30,8 +29,8 @@ int main(int argc, char **argv)
     if (chunk_size == -1 || schedule_type == -1 || thread_cnt == -1)
         error_exit("Invalid Argument Value!");
 
-    sum = 0.0;
     step = 1.0 / (double)NUM_STEPS;
+    sum = 0.0;
 
     omp_set_num_threads(thread_cnt);
     time_start = omp_get_wtime();
