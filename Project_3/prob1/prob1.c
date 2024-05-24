@@ -45,7 +45,7 @@ int main(int argc, char **argv)
                 count++;
         }
     }
-    else if (schedule_type == 3)ㄹ
+    else if (schedule_type == 3)
     {
 #pragma omp parallel for schedule(static, 10) reduction(+:count)
         for (int i = 1; i <= NUM_END; i++) {
@@ -75,7 +75,7 @@ int isPrime(int x)
 {
     if (x <= 1)
         return (0);
-    
+
     for (int i = 2; i * i <= x; i++)
     {
         if (x % i == 0)
