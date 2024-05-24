@@ -13,8 +13,11 @@ int count = 0;
 
 int main(int argc, char **argv)
 {
-    int schedule_type;
-    int thread_cnt;
+    double  time_diff;
+    double  time_end;
+    double  time_start;
+    int     schedule_type;
+    int     thread_cnt;
 
     if (argc != 3)
         error_exit("Invalid Argument! Usage: ./prob1 scheduling_type# #_of_thread");
@@ -23,6 +26,7 @@ int main(int argc, char **argv)
     if (schedule_type == -1 || thread_cnt == -1)
         error_exit("Invalid Argument Value!");
     omp_set_num_threads(thread_cnt);
+    time_start = omp_get_wtime();
     if (schedule_type == 1)
     {
 #pragma omp parallel for schedule(static) reduction(+:count)
@@ -56,6 +60,10 @@ int main(int argc, char **argv)
         }
     }
 
+    time_end = omp_get_wtime();
+    time_diff = time_end - time_start;
+
+    printf("Program Execution Time: %.2fms\n", time_diff * 1000);
     printf("1...%d prime# counter=%d\n", NUM_END - 1, count);
 
     return (0);
