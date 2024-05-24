@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include </opt/homebrew/Cellar/libomp/18.1.6/include/omp.h>
 
 #define NUM_END 200000
 
@@ -22,7 +22,41 @@ int main(int argc, char **argv)
     thread_cnt = parse_thread_cnt(argv[2]);
     if (schedule_type == -1 || thread_cnt == -1)
         error_exit("Invalid Argument Value!");
-    printf("Hello, World!\n");
+    omp_set_num_threads(thread_cnt);
+    if (schedule_type == 1)
+    {
+#pragma omp parallel for schedule(static) reduction(+:count)
+        for (int i = 1; i <= NUM_END; i++) {
+            if (isPrime(i))
+                count++;
+        }
+    }
+    else if (schedule_type == 2)
+    {
+#pragma omp parallel for schedule(dynamic) reduction(+:count)
+        for (int i = 1; i <= NUM_END; i++) {
+            if (isPrime(i))
+                count++;
+        }
+    }
+    else if (schedule_type == 3)
+    {
+#pragma omp parallel for schedule(static, 10) reduction(+:count)
+        for (int i = 1; i <= NUM_END; i++) {
+            if (isPrime(i))
+                count++;
+        }
+    }
+    else if (schedule_type == 4)
+    {
+#pragma omp parallel for schedule(dynamic, 10) reduction(+:count)
+        for (int i = 1; i <= NUM_END; i++) {
+            if (isPrime(i))
+                count++;
+        }
+    }
+
+    printf("1...%d prime# counter=%d\n", NUM_END - 1, count);
 
     return (0);
 }
