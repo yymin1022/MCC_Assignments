@@ -4,12 +4,11 @@
 
 #define NUM_END 200000
 
+int     count = 0;
 int     isPrime(int x);
 int     parse_schedule_type(char *str);
 int     parse_thread_cnt(char *str);
 void    error_exit(char *msg);
-
-int count = 0;
 
 int main(int argc, char **argv)
 {
@@ -43,7 +42,7 @@ int main(int argc, char **argv)
                 count++;
         }
     }
-    else if (schedule_type == 3)
+    else if (schedule_type == 3)ㄹ
     {
 #pragma omp parallel for schedule(static, 10) reduction(+:count)
         for (int i = 1; i <= NUM_END; i++) {
