@@ -1,4 +1,4 @@
-CC		= gcc
+CC		= gcc-14
 CFLAGS	= -Wall -Werror -Wextra
 
 TARGET	= prob1
@@ -8,10 +8,10 @@ OBJ		= $(SRC:.c=.o)
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $(TARGET)
+	$(CC) $(CFLAGS) $^ -fopenmp -o $(TARGET)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $^
+	$(CC) $(CFLAGS) -fopenmp -c $^
 
 clean:
 	rm -rf $(OBJ)
