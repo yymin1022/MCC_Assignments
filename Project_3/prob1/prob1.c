@@ -32,7 +32,8 @@ int main(int argc, char **argv)
     if (schedule_type == 1)
     {
 #pragma omp parallel for schedule(static) reduction(+:count)
-        for (int i = 1; i <= NUM_END; i++) {
+        for (int i = 1; i <= NUM_END; i++)
+        {
             if (isPrime(i))
                 count++;
         }
@@ -40,7 +41,8 @@ int main(int argc, char **argv)
     else if (schedule_type == 2)
     {
 #pragma omp parallel for schedule(dynamic) reduction(+:count)
-        for (int i = 1; i <= NUM_END; i++) {
+        for (int i = 1; i <= NUM_END; i++)
+        {
             if (isPrime(i))
                 count++;
         }
@@ -48,7 +50,8 @@ int main(int argc, char **argv)
     else if (schedule_type == 3)
     {
 #pragma omp parallel for schedule(static, 10) reduction(+:count)
-        for (int i = 1; i <= NUM_END; i++) {
+        for (int i = 1; i <= NUM_END; i++)
+        {
             if (isPrime(i))
                 count++;
         }
@@ -56,7 +59,8 @@ int main(int argc, char **argv)
     else if (schedule_type == 4)
     {
 #pragma omp parallel for schedule(dynamic, 10) reduction(+:count)
-        for (int i = 1; i <= NUM_END; i++) {
+        for (int i = 1; i <= NUM_END; i++)
+        {
             if (isPrime(i))
                 count++;
         }
