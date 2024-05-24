@@ -9,10 +9,10 @@ int     parse_schedule_type(char *str);
 int     parse_thread_cnt(char *str);
 void    error_exit(char *msg);
 
-int main(void)
+int main(int argc, char **argv)
 {
-    double  x;
     double  pi;
+    double  step;
     double  sum;
     double  time_diff;
     double  time_end;
@@ -30,14 +30,49 @@ int main(void)
     if (chunk_size == -1 || schedule_type == -1 || thread_cnt == -1)
         error_exit("Invalid Argument Value!");
 
+    sum = 0.0;
+    step = 1.0 / (double)NUM_STEPS;
+
+    omp_set_num_threads(thread_cnt);
     time_start = omp_get_wtime();
 
-    step = 1.0 / (double)num_steps;
-    for (long i = 0; i < NUM_STEPS; i++)
+#pragma omp parallel
     {
-        x = (i + 0.5) * step;
-        sum = sum + 4.0 / (1.0 + x * x);
+        double  x;
+        double  sum_part;
+
+        sum_part = 0.0;
+        if (schedule_type == 1)
+        {
+#pragma omp for schedule(static, chunk_size) nowait
+            for (int i = 0; i < NUM_STEPS; i++)
+            {
+                x = (i + 0.5) * step;
+                sum_part += 4.0 / (1.0 + x * x);
+            }
+        }
+        else if (schedule_type == 2)
+        {
+#pragma omp for schedule(dynamic, chunk_size) nowait
+            for (int i = 0; i < NUM_STEPS; i++)
+            {
+                x = (i + 0.5) * step;
+                sum_part += 4.0 / (1.0 + x * x);
+            }
+        }
+        else if (schedule_type == 3)
+        {
+#pragma omp for schedule(guided, chunk_size) nowait
+            for (int i = 0; i < NUM_STEPS; i++)
+            {
+                x = (i + 0.5) * step;
+                sum_part += 4.0 / (1.0 + x * x);
+            }
+        }
+#pragma omp atomic
+        sum += sum_part;
     }
+
     pi = step * sum;
 
     time_end = omp_get_wtime();
