@@ -20,12 +20,15 @@ int main(int argc, char **argv)
 
     if (argc != 3)
         error_exit("Invalid Argument! Usage: ./prob1 scheduling_type# #_of_thread");
+
     schedule_type = parse_schedule_type(argv[1]);
     thread_cnt = parse_thread_cnt(argv[2]);
     if (schedule_type == -1 || thread_cnt == -1)
         error_exit("Invalid Argument Value!");
+
     omp_set_num_threads(thread_cnt);
     time_start = omp_get_wtime();
+
     if (schedule_type == 1)
     {
 #pragma omp parallel for schedule(static) reduction(+:count)
@@ -72,6 +75,7 @@ int isPrime(int x)
 {
     if (x <= 1)
         return (0);
+    
     for (int i = 2; i * i <= x; i++)
     {
         if (x % i == 0)
