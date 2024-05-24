@@ -5,15 +5,13 @@ TARGET	= prob2
 SRC		= prob2.c
 OBJ		= $(SRC:.c=.o)
 
-DIR_OMP	= /opt/homebrew/opt/libomp/lib
-
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) $^ -fopenmp -o $(TARGET)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $^
+	$(CC) $(CFLAGS) -fopenmp -c $^
 
 clean:
 	rm -rf $(OBJ)
