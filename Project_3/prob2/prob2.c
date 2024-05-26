@@ -98,7 +98,7 @@ int parse_schedule_type(char *str)
     int res;
 
     res = strtol(str, NULL, 10);
-    if (res < 1 || res > 4)
+    if (res < 1 || res > 3)
         return (-1);
     return (res);
 }
